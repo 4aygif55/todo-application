@@ -1,0 +1,40 @@
+<%- include('../partials/header'); %> 
+
+<div class="container">
+    <div id="outer">
+        <div id="inner">
+            <h2> Welcome to my todo list application </h2>
+            <h6> Here you can add your tasks and prioritize them by the help of priority and urgency matrix.</h6>
+    
+            <img src="images/diagram.png" style="margin-top: 50px; margin-bottom: 50px;"/>
+
+
+            <%if (!user) { %>
+
+                <p> Please <a href="/login"> Sign up </a> or <a href="/register"> Sign in</a> to use the application.</p>
+
+				<% } %>
+
+        </div>
+
+    </div>
+     
+
+</div>
+
+
+<style>
+    #outer {
+        margin-top: 50px;
+        width: 100%;
+    }
+
+
+    #inner {
+    display: table;
+    width: 600px;
+      margin: 0 auto;
+    }
+</style>
+
+<%- include('../partials/footer'); %>

@@ -1,0 +1,160 @@
+<%- include('../partials/header'); %>
+
+
+
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+
+        <h4 style="margin-top: 20px; margin-bottom: 20px; text-align: center;">Create</h4>
+        <div class="modal-body">
+            <form action="/todos" method="POST">
+                <div class="form-group">
+                    <label for="description"><b>Description:</b></label>
+                    <textarea
+                    type="text"
+                    placeholder="Description"
+                    name="description"
+                    wrap="physical"
+                    class="form-control"
+                    required></textarea>
+                </div>
+
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="urgent", name="urgent">
+                    <label class="form-check-label" for="urgent">Urgent</label>
+                </div>
+
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="important", name="important">
+                    <label class="form-check-label" for="important">Important</label>
+                </div>
+
+                <div class="form-group" style="text-align: right;">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+</div>
+</div>
+
+
+
+<div class=limitter>
+    <div class="container-table100">
+
+        <div class="wrap-table100">
+            <div class="form-group" style="text-align: right; display: flex;">
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Create</button>
+                <form action="/sort" method="GET">
+                    <button type="submit" class="btn btn-default" >Sort By prioriy</button>
+                </form>
+            </div>
+
+            <div class="table100 ver1 m-b-110">
+                <div class="table100-head">
+                    <table>
+                        <thead>
+                            <tr class="row100 head">
+                                <th class="cell100 column1">Description</th>
+                                <th class="cell100 column2">Important</th>
+                                <th class="cell100 column3">Urgent</th>
+                                <th class="cell100 column4">Action</th>
+                                <th class="cell100 column5">Edit</th>
+
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+                <div class="table100-body js-pscroll">
+                    <table>
+                        <tbody>
+                            <% todos.forEach(function(todo){ %>
+                                    <td class="cell100 column1"><%= todo.description %></td>
+                                        <%if (todo.important === true) { %>
+                                            <td class="cell100 column2" style="color: green;"><%= todo.important %></td>
+
+                                        <% } %>
+                                    <%if (todo.important === false) { %>
+                                        <td  class="cell100 column2" style="color: red;"><%= todo.important %></td>
+
+                                    <% } %>
+                                    <%if (todo.urgent === true) { %>
+                                        <td class="cell100 column2" style="color: green;"><%= todo.urgent %></td>
+
+                                    <% } %>
+                                    <%if (todo.urgent === false) { %>
+                                        <td class="cell100 column2" style="color: red;"><%= todo.urgent %></td>
+
+                                    <% } %>
+                                    <%if (todo.action === 'ELIMINATE') { %>
+                                        <td class="cell100 column2" style="color: red;"><%= todo.action %></td>
+
+                                    <% } %>
+
+                                    <%if (todo.action === 'DELEGATE') { %>
+                                        <td class="cell100 column2" style="color: orange;"><%= todo.action %></td>
+
+                                    <% } %>
+
+                                    <%if (todo.action === 'DO') { %>
+                                        <td class="cell100 column2" style="color: green ;"><%= todo.action %></td>
+
+                                    <% } %>
+
+
+                                    <%if (todo.action === 'PLAN') { %>
+                                        <td  class="cell100 column2" style="color: blue ;"><%= todo.action %></td>
+                                        <%= console.log(todo._id) %>
+
+                                    <% } %>
+
+                                    <td id="fighter"  class="cell100 column3">
+                                        <form action="/todos/<%=todo._id%>" method="GET">
+                                            <button type="submit" class="btn btn-default" >edit</button>
+                                        </form>
+                                    
+                                    </td>
+
+                                    
+
+                                </tr>
+                                <% }) %>
+       
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+    </div>
+
+</div>
+
+
+<script>
+    $('a.edit').click(function (e) {
+    console.log("here");
+    var tr = $(this).edit('td'),
+        modal = $('#myModal');
+    // make AJAX call passing the ID
+    console.log(tr.data('data'));
+    $.getJSON('/todos/' + tr.data('data-id'), function (data) {
+        // set values in modal
+        modal.find('form').attr('action', '/todos/' + tr.data('id') );
+        modal.find('[name=title]').val( data.title );
+        // open modal
+        modal.modal('show');
+    });
+});
+</script>
+
+<%- include('../partials/footer'); %>

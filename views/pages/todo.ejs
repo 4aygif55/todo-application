@@ -1,0 +1,145 @@
+<%- include('../partials/header'); %>
+    <div id="outer">
+        <div id="inner">
+            <div id="head" class="container-fluid">
+                <h1 style="margin-bottom: 40px;">Todo View</h1>
+            </div>
+            <form action="/todos/edit/<%=todo._id%>" method="POST">
+                <div class="form-group">
+                    <label for="description"><b>Description:</b></label>
+                    <textarea
+                    type="text"
+                    name="description"
+                    wrap="physical"
+                    class="form-control"
+                    required><%=todo.description%></textarea>
+                </div>
+                <div class="form-group form-check">
+                    <%if (todo.urgent) { %>
+                        <input type="checkbox" class="form-check-input" id="urgent", name="urgent" checked>
+                        <label class="form-check-label" for="urgent">Urgent</label>
+
+                <% } %>
+
+                <%if (!todo.urgent) { %>
+                    <input type="checkbox" class="form-check-input" id="urgent", name="urgent">
+                    <label class="form-check-label" for="urgent">Urgent</label>
+
+            <% } %>
+
+                </div>
+
+                <div class="form-group form-check">
+                    <%if (todo.important) { %>
+                        <input type="checkbox" class="form-check-input" id="important", name="important" checked>
+                        <label class="form-check-label" for="important">Important</label>
+    
+                <% } %>
+
+                <%if (!todo.important) { %>
+                    <input type="checkbox" class="form-check-input" id="important", name="important">
+                    <label class="form-check-label" for="important">Important</label>
+
+            <% } %>
+
+                </div>
+
+
+                <div class="form-group form-check">
+                    <%if (!todo.completed) { %>
+                        <input type="checkbox" class="form-check-input" id="completed", name="completed">
+                        <label class="form-check-label" for="completed">Completed</label>
+        
+                <% } %>
+    
+                <%if (todo.completed) { %>
+                    <input type="checkbox" class="form-check-input" id="completed", name="completed" checked>
+                    <label class="form-check-label" for="completed">Completed</label>
+    
+            <% } %>
+                </div>
+
+                <label for="createdAt"><b>Action:</b></label>
+                <div class="form-group">
+                    <%if (todo.action === "PLAN") { %>
+                        <p style="color: blue;"><%=todo.action%></p>
+                <% } %>
+                <%if (todo.action === "DO") { %>
+                    <p style="color: green;"><%=todo.action%></p>
+                    <% } %>
+            <%if (todo.action === "DELEGATE") { %>
+                <p style="color: orange;"><%=todo.action%></p>
+                <% } %>
+        <%if (todo.action === "ELIMINATE") { %>
+            <p style="color: red;"><%=todo.action%></p>
+            <% } %>
+
+                </div>
+                <label for="createdAt"><b>Created At:</b></label>
+                <div class="form-group">
+                    <p> <%=createdAt%></p>
+
+                </div>
+
+                <div class="form-group" style="text-align: right;">
+                    <button type="submit" name="delete" class="btn btn-primary">Edit</button>    
+            </form>
+            <form action="/todos/delete/<%=todo._id%>" method="POST">
+                <button 
+                type="submit" 
+                name="delete" 
+                 class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+        </div>
+    </div>
+
+
+
+
+<%- include('../partials/footer'); %>
+
+<style>
+
+    #outer {
+        width:100%;
+
+    }
+
+    #inner {
+    display: table;
+    width: 500px;
+      margin: 0 auto;
+    }
+
+    .limiter {
+        width: 50%;
+    margin: 0 auto;
+
+}
+
+button {
+    width: 100px;
+    height: 40px;
+    margin-bottom: 15px;
+}
+
+.container-table100 {
+  max-height: 80vh;
+  background: #fff;
+  display: block;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 37px;;
+  /* padding: 33px 30px; */
+}
+
+.wrapper {
+    width: 500px;
+    margin-left: 30px;
+    align-items: center;
+
+
+}
+</style>
