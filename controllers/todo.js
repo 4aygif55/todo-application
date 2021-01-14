@@ -95,6 +95,7 @@ module.exports = (app) => {
                 }
             });
 
+            global.completed = false;
             return res.redirect("/todos")
         } catch (error) {
             console.log(error)
