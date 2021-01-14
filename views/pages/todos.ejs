@@ -50,8 +50,15 @@
 
 <div class=limitter>
     <div class="container-table100">
-
         <div class="wrap-table100">
+
+            <%if (completed) { %>
+                <h1>Completed</h1>
+                <% } %>
+                
+                <%if (!completed) { %>
+                    <h1>Todo</h1>
+                    <% } %>
             <div class="form-group" style="text-align: right; display: flex;">
                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Create</button>
                 <form action="/sort" method="GET">
