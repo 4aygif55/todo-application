@@ -44,7 +44,12 @@ app.use("*", async (req, res, next) => {
     global.user = user;
   }
   next();
-})
+});
+
+app.use((req, res, next) => {
+	res.set('Cache-Control', 'no-store')
+	next()
+  });
 
 app.set("view engine", "ejs");
 

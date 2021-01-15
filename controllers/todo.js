@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const TodoItem = mongoose.model("todos");
 const User = mongoose.model("users");
 
-
 module.exports = (app) => {
     app.get("/todos", auth, async (req, res) => {
         const todos = await TodoItem.find({user: global.user._id, completed: false}).sort({completed: 'desc' });
@@ -103,7 +102,8 @@ module.exports = (app) => {
                 }
             });
 
-            return res.redirect("/todos")
+            return res.redirect(`/todos`);
+     
         } catch (error) {
             console.log(error)
             return res.redirect(`/todos/${req.params.id}`);
