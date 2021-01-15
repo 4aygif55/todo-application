@@ -51,18 +51,13 @@
 <div class=limitter>
     <div class="container-table100">
         <div class="wrap-table100">
-
-            <%if (completed) { %>
-                <h1>Completed</h1>
-                <% } %>
-                
-                <%if (!completed) { %>
-                    <h1>Todo</h1>
-                    <% } %>
             <div class="form-group" style="text-align: right; display: flex;">
                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Create</button>
                 <form action="/sort" method="GET">
                     <button type="submit" class="btn btn-default" >Sort By prioriy</button>
+                </form>
+                <form action="/filterCompleted" method="GET">
+                    <button type="submit" class="btn btn-default" >Show completed</button>
                 </form>
             </div>
 
@@ -72,10 +67,14 @@
                         <thead>
                             <tr class="row100 head">
                                 <th class="cell100 column1">Description</th>
+                                <th class="cell100 column2">Completed</th>
                                 <th class="cell100 column2">Important</th>
                                 <th class="cell100 column3">Urgent</th>
                                 <th class="cell100 column4">Action</th>
                                 <th class="cell100 column5">Edit</th>
+                                <th class="cell100 column5">Delete</th>
+
+
 
                             </tr>
                         </thead>
@@ -86,7 +85,20 @@
                     <table>
                         <tbody>
                             <% todos.forEach(function(todo){ %>
+                                
                                     <td class="cell100 column1"><%= todo.description %></td>
+
+                                    <%if (todo.completed) { %>
+                                        <td style="color: green;" class="cell100 column2"><%= todo.completed %></td>
+
+                                    <% } %>
+
+                                    <%if (!todo.completed) { %>
+                                        <td style="color: red;" class="cell100 column2"><%= todo.completed %></td>
+
+                                    <% } %>
+
+
                                         <%if (todo.important === true) { %>
                                             <td class="cell100 column2" style="color: green;"><%= todo.important %></td>
 
@@ -131,6 +143,18 @@
                                         </form>
                                     
                                     </td>
+
+                                    <td id="fighter"  class="cell100 column3">
+                                        <form action="/todos/delete/<%=todo._id%>" method="POST">
+                                            <button 
+                                            type="submit" 
+                                            name="delete" 
+                                             class="btn btn-danger">Delete</button>
+                                        </form>
+                                    
+                                    </td>
+
+
 
                                     
 

@@ -7,15 +7,24 @@ const User = mongoose.model("users");
 
 module.exports = (app) => {
     app.get("/todos", auth, async (req, res) => {
-        const todos = await TodoItem.find({user: global.user._id, completed: false}).sort({createdAt: 'desc'});
-        global.completed = false;
+        const todos = await TodoItem.find({user: global.user._id, completed: false}).sort({completed: 'desc' });
         return res.render("pages/todos", {error: false, todos: todos});
     });
 
     app.get("/sort", auth, async (req, res) => {
         try {
-            console.log(global.completed);
-            const todos = await TodoItem.find({user: global.user._id, completed: global.completed}).sort([["priority", "asc"]]);
+            const todos = await TodoItem.find({user: global.user._id,  completed: false}).sort([["priority", "asc"]]);
+            return res.render("pages/todos", {error: false, todos: todos});
+        } catch (error) {
+            console.log(error);
+            return res.redirect("pages/todos");
+        }
+
+    });
+
+    app.get("/filterCompleted", auth, async (req, res) => {
+        try {
+            const todos = await TodoItem.find({user: global.user._id, completed: true}).sort({completed: 'desc' });
             return res.render("pages/todos", {error: false, todos: todos});
         } catch (error) {
             console.log(error);
@@ -27,7 +36,6 @@ module.exports = (app) => {
 
     app.get("/completed", auth, async (req, res) => {
         const todos = await TodoItem.find({user: global.user._id, completed: true}).sort({createdAt: 'desc'});
-        global.completed = true;
         return res.render("pages/todos", {error: false, todos: todos});
     });
 
@@ -95,7 +103,6 @@ module.exports = (app) => {
                 }
             });
 
-            global.completed = false;
             return res.redirect("/todos")
         } catch (error) {
             console.log(error)
