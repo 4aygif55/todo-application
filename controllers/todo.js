@@ -101,7 +101,7 @@ module.exports = (app) => {
                 completed: completed
                 }
             });
-
+            
             return res.redirect(`/todos`);
      
         } catch (error) {
@@ -116,6 +116,8 @@ module.exports = (app) => {
     app.post("/todos/delete", auth, async(req, res) => {
         console.log(req.body.todoId);
         try {
+            const todo = await TodoItem.findById(req.body.todoId)
+            console.log(todo);
             await TodoItem.findOneAndDelete(req.body.todoId);
             return res.redirect("/todos");
         } catch (error) {
