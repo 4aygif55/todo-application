@@ -113,14 +113,14 @@ module.exports = (app) => {
 
     });
 
-    app.post("/todos/delete/:id", auth, async(req, res) => {
-        console.log(req.params.id);
+    app.post("/todos/delete", auth, async(req, res) => {
+        console.log(req.body.todoId);
         try {
-            await TodoItem.findOneAndDelete(req.params.id);
+            await TodoItem.findOneAndDelete(req.body.todoId);
             return res.redirect("/todos");
         } catch (error) {
             console.log(error);
-            return res.redirect(`/todos/${req.params.id}`);
+            return res.redirect(`/todos/${req.body.todoId}`);
         }
     });
 

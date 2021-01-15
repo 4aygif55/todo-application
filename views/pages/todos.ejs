@@ -143,9 +143,16 @@
                                         </form>
                                     
                                     </td>
-
-                                    <td id="fighter"  class="cell100 column3">
-                                        <form action="/todos/delete/<%=todo._id%>" method="POST">
+                                           <td id="fighter"  class="cell100 column3">
+                                        <form action="/todos/delete" method="POST">
+                                            <input
+                                            type="todoId"
+                                            name="todoId"
+                                            class="form-control"
+                                            value="<%=todo._id%>"
+                                            hidden
+                                            readonly
+                                        />     
                                             <button 
                                             type="submit" 
                                             name="delete" 
